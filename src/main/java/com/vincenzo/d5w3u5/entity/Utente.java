@@ -44,7 +44,7 @@ public class Utente implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.ruolo == null) {
-            return Collections.emptyList();  // returns an empty list if role is null
+            return Collections.emptyList();
         }
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + this.ruolo.name()));
     }
@@ -61,7 +61,7 @@ public class Utente implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;  // You can implement business logic to determine if the account is expired
+        return true;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String accessToken = authHeader.substring(7);
         jwtTools.verifyToken(accessToken);
 
-        Long userId = jwtTools.extractIdFromToken(accessToken); // Assumi che extractIdFromToken restituisca un Long
+        Long userId = jwtTools.extractIdFromToken(accessToken);
         Optional<Utente> userOptional = usersService.findUserById(userId);
 
         if (!userOptional.isPresent()) {
@@ -56,6 +56,6 @@ public class JWTFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathMatcher pathMatcher = new AntPathMatcher();
         return pathMatcher.match("/users/**", request.getServletPath()) ||
-                pathMatcher.match("/auth/login", request.getServletPath());
+                pathMatcher.match("/auth/**", request.getServletPath());
     }
 }

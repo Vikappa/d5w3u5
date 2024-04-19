@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")  // Cambiato da /registration a /users per generalità
+@RequestMapping("/users")
 public class UserRegistrationController {
 
     private final ServiceUtente userService;
