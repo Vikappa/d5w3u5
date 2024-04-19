@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,12 @@ public class Evento {
     @ManyToOne
     @JoinColumn(name = "organizer_id", referencedColumnName = "id")
     private Utente organizer;
+
+    private String titolo;
+    private String descrizione;
+    private LocalDate data;
+    private String luogo;
+    private int maxPosti;
 
     @ManyToMany
     @JoinTable(
