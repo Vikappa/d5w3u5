@@ -1,6 +1,7 @@
 package com.vincenzo.d5w3u5.service;
 
 import com.vincenzo.d5w3u5.exceptions.UserNotFoundException;
+import com.vincenzo.d5w3u5.exceptions.InvalidRegistrationCredentials;
 import com.vincenzo.d5w3u5.repository.UtenteRepository;
 import com.vincenzo.d5w3u5.entity.Utente;
 import com.vincenzo.d5w3u5.payload.DTOUtente;
@@ -23,13 +24,20 @@ public class ServiceUtente {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Utente registerNewUserAccount(DTOUtente userDto) {
+    public Utente registerNewUserAccount(DTOUtente userDto) throws InvalidRegistrationCredentials {
+        if (emailExists(userDto.getEmail())) {
+            throw new InvalidRegistrationCredentials("Email già usata per questa password: " + userDto.getEmail());
+        }
         Utente newUser = new Utente();
         newUser.setUsername(userDto.getUsername());
         newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         newUser.setEmail(userDto.getEmail());
         newUser.setRuolo(userDto.getRuolo());
         return userRepository.save(newUser);
+    }
+
+    private boolean emailExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 
     public List<Utente> findAllUsers() {
@@ -39,7 +47,6 @@ public class ServiceUtente {
     public Optional<Utente> findUserById(Long id) {
         return userRepository.findById(id);
     }
-
 
     public Optional<Utente> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
