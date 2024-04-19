@@ -1,5 +1,6 @@
 package com.vincenzo.d5w3u5.entity;
 
+import com.vincenzo.d5w3u5.enumerator.Ruolo;
 import com.vincenzo.d5w3u5.payload.DTOUtente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,25 +8,35 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Utente {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Ruolo role;
 
+    @Getter
+    @Setter
     private String username;
+    @Getter
+    @Setter
     private String password;
+    @Getter
+    @Setter
     private String email;
 
     public Utente() {
     }
 
-    public Utente(Role role, String username, String password, String email) {
+    public Utente(Ruolo role, String username, String password, String email) {
         this.role = role;
         this.username = username;
         this.password = password;
@@ -33,49 +44,12 @@ public class Utente {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Role getRole() {
+    public Ruolo getRuolo() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRuolo(Ruolo role) {
         this.role = role;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRole(DTOUtente.Role role) {
-    }
-}
-enum Role {
-    USER, ORGANIZER, ADMIN
 }

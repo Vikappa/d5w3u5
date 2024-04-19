@@ -1,56 +1,39 @@
 package com.vincenzo.d5w3u5.payload;
 
+import com.vincenzo.d5w3u5.enumerator.Ruolo;
+import lombok.Getter;
+import lombok.Setter;
 
 public class DTOUtente {
-    public enum Role {
-        USER, ORGANIZER, ADMIN
-    }
 
 
-    private Role role;
+    private Ruolo role;
 
+    @Setter
+    @Getter
     private String username;
+    @Setter
+    @Getter
     private String password;
+    @Setter
+    @Getter
     private String email;
 
-    public DTOUtente(Role role, String username, String password, String email) {
+    public DTOUtente(Ruolo role, String username, String password, String email) {
         this.role = role;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public Role getRole() {
+    public Ruolo getRuolo() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRuolo(Ruolo role) {
         this.role = role;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
 
 

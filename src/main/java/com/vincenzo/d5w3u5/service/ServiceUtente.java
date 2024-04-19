@@ -26,7 +26,7 @@ public class ServiceUtente {
         newUser.setUsername(userDto.getUsername());
         newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         newUser.setEmail(userDto.getEmail());
-        newUser.setRole(userDto.getRole());
+        newUser.setRuolo(userDto.getRuolo());
         return userRepository.save(newUser);
     }
 
