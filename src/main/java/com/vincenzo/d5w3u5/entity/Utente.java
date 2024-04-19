@@ -1,55 +1,81 @@
 package com.vincenzo.d5w3u5.entity;
 
 import com.vincenzo.d5w3u5.enumerator.Ruolo;
-import com.vincenzo.d5w3u5.payload.DTOUtente;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Utente {
+@Getter
+@Setter
+@NoArgsConstructor
+public class Utente implements UserDetails {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Ruolo role;
+    private Ruolo ruolo;
 
-    @Getter
-    @Setter
     private String username;
-    @Getter
-    @Setter
     private String password;
-    @Getter
-    @Setter
     private String email;
 
-    public Utente() {
-    }
+    @ManyToMany(mappedBy = "participants")
+    private Set<Evento> events = new HashSet<>();
 
-    public Utente(Ruolo role, String username, String password, String email) {
-        this.role = role;
+    public Utente(Ruolo ruolo, String username, String password, String email) {
+        this.ruolo = ruolo;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-
-    public Ruolo getRuolo() {
-        return role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.ruolo == null) {
+            return Collections.emptyList();  // returns an empty list if role is null
+        }
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + this.ruolo.name()));
     }
 
-    public void setRuolo(Ruolo role) {
-        this.role = role;
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;  // You can implement business logic to determine if the account is expired
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

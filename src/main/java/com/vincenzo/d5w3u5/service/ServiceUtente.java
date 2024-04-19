@@ -41,5 +41,7 @@ public class ServiceUtente {
     }
 
 
-
+    public Optional<Utente> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
