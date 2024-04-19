@@ -1,5 +1,6 @@
 package com.vincenzo.d5w3u5.service;
 
+import com.vincenzo.d5w3u5.exceptions.UserNotFoundException;
 import com.vincenzo.d5w3u5.repository.UtenteRepository;
 import com.vincenzo.d5w3u5.entity.Utente;
 import com.vincenzo.d5w3u5.payload.DTOUtente;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceUtente {
@@ -33,4 +35,11 @@ public class ServiceUtente {
     public List<Utente> findAllUsers() {
         return userRepository.findAll();
     }
+
+    public Optional<Utente> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
+
 }
